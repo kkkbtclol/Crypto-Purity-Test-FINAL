@@ -21,7 +21,7 @@
 
     <form id="quiz" class="card" autocomplete="off">
       <ol class="questions" id="questionList">
-        <!-- Questions injected via JS for clean numbering and easier edits -->
+        <!-- Questions injected via JS -->
       </ol>
 
       <div class="actions">
@@ -35,12 +35,13 @@
             <div class="big" id="degenPct">0%</div>
             <div class="label">Degen Score</div>
           </div>
-          <div class="score">
-            <div class="big" id="purityPct">100%</div>
-            <div class="label">Purity</div>
-          </div>
         </div>
         <p class="badge" id="badgeText">You’re chilling… for now.</p>
+        <div class="share">
+          <button type="button" id="shareX" class="btn small">Share on X (Twitter)</button>
+          <button type="button" id="copyLink" class="btn ghost small">Copy share text</button>
+          <span id="copyDone" class="muted" role="status" aria-live="polite" style="display:none;margin-left:8px;">Copied!</span>
+        </div>
       </section>
     </form>
 
