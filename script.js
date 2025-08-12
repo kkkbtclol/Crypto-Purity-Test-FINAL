@@ -1,4 +1,3 @@
-// Inject questions and handle scoring
 const QUESTIONS = [
   "Bought a memecoin without reading the whitepaper",
   "Bought a coin because of the logo alone",
@@ -51,7 +50,6 @@ const QUESTIONS = [
   "Bought into a coin just because the name made you laugh",
   "Bought into a coin even though you knew it was a scam"
 ];
-
 const listEl = document.getElementById('questionList');
 QUESTIONS.forEach((q, i) => {
   const li = document.createElement('li');
@@ -61,11 +59,9 @@ QUESTIONS.forEach((q, i) => {
   cb.type = 'checkbox';
   cb.name = 'q' + (i+1);
   cb.id = 'q' + (i+1);
-
   const span = document.createElement('span');
   span.className = 'qtext';
   span.textContent = q;
-
   row.appendChild(cb);
   row.appendChild(span);
   li.appendChild(row);
@@ -76,8 +72,12 @@ const submitBtn = document.getElementById('submitBtn');
 const resetBtn = document.getElementById('resetBtn');
 const results = document.getElementById('results');
 const degenPctEl = document.getElementById('degenPct');
-const purityPctEl = document.getElementById('purityPct');
 const badgeText = document.getElementById('badgeText');
+const shareBtn = document.getElementById('shareX');
+const copyBtn = document.getElementById('copyLink');
+const copyDone = document.getElementById('copyDone');
+
+let lastShareText = '';
 
 function calcScore() {
   const boxes = listEl.querySelectorAll('input[type="checkbox"]');
@@ -85,25 +85,49 @@ function calcScore() {
   let checked = 0;
   boxes.forEach(b => { if (b.checked) checked++; });
   const degenPct = Math.round((checked / total) * 100);
-  const purityPct = 100 - degenPct;
-
   degenPctEl.textContent = degenPct + '%';
-  purityPctEl.textContent = purityPct + '%';
 
-  // Badge text
   let label = '';
   if (degenPct <= 10) label = '📗 Solana Newbie: touches grass, sometimes.';
   else if (degenPct <= 25) label = '💼 Cautious Trader: knows when to fold.';
   else if (degenPct <= 50) label = '🧪 Semi‑Degen: lives on DEX Screener tabs.';
   else if (degenPct <= 75) label = '🔥 Full Degen: rugs are a personality trait.';
   else label = '☠ Certified Rug Magnet: may the next pump save you.';
-
   badgeText.textContent = label;
+
   results.hidden = false;
   results.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  lastShareText = `I scored ${degenPct}% degen on the Solana Memecoin Degen Test! Try it: cryptopuritytest.xyz`;
 }
 
 submitBtn.addEventListener('click', calcScore);
-resetBtn.addEventListener('click', () => {
-  results.hidden = true;
-});
+resetBtn.addEventListener('click', () => results.hidden = true);
+
+if (shareBtn) {
+  shareBtn.addEventListener('click', () => {
+    if (!lastShareText) calcScore();
+    const intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(lastShareText) + '&hashtags=Solana,Memecoins,CryptoPurityTest';
+    window.open(intent, '_blank', 'noopener');
+  });
+}
+
+if (copyBtn) {
+  copyBtn.addEventListener('click', async () => {
+    if (!lastShareText) calcScore();
+    try {
+      await navigator.clipboard.writeText(lastShareText);
+      copyDone.style.display = 'inline';
+      setTimeout(() => copyDone.style.display = 'none', 2000);
+    } catch (e) {
+      const temp = document.createElement('input');
+      temp.value = lastShareText;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      copyDone.style.display = 'inline';
+      setTimeout(() => copyDone.style.display = 'none', 2000);
+    }
+  });
+}
