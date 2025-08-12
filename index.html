@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solana Memecoin Degen Test</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="A Solana memecoin-themed purity test to measure your degen score." />
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <h1>Solana Memecoin <span>Degen Test</span></h1>
+      <p class="sub">
+        Welcome to the Crypto Purity Test — a lighthearted self‑assessment for the Solana memecoin trenches.
+        Check everything you’ve actually done. Higher score = more <em>degen</em>. Nothing is stored.
+      </p>
+    </header>
+
+    <form id="quiz" class="card" autocomplete="off">
+      <ol class="questions" id="questionList">
+        <!-- Questions injected via JS for clean numbering and easier edits -->
+      </ol>
+
+      <div class="actions">
+        <button type="button" id="submitBtn" class="btn">Calculate Degen Score</button>
+        <button type="reset" class="btn ghost" id="resetBtn">Reset</button>
+      </div>
+
+      <section id="results" class="results" aria-live="polite" hidden>
+        <div class="scoreline">
+          <div class="score">
+            <div class="big" id="degenPct">0%</div>
+            <div class="label">Degen Score</div>
+          </div>
+          <div class="score">
+            <div class="big" id="purityPct">100%</div>
+            <div class="label">Purity</div>
+          </div>
+        </div>
+        <p class="badge" id="badgeText">You’re chilling… for now.</p>
+      </section>
+    </form>
+
+    <footer class="foot">
+      <p>
+        Made for fun. Not financial advice. Built with ❤️ on Solana vibes.
+      </p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
